@@ -1,3 +1,4 @@
+using Geometry;
 using UnityEngine;
 using Voronoi;
 
@@ -22,8 +23,8 @@ namespace Utils
             Vector2 midPointAB = Vector2.Lerp(pointA, pointB, 0.5f);
             Vector2 midPointBC = Vector2.Lerp(pointB, pointC, 0.5f);
 
-            LinearEquation perpendicularAB = lineAB.PerdicularLineAt(midPointAB);
-            LinearEquation perpendicularBC = lineBC.PerdicularLineAt(midPointBC);
+            LinearEquation perpendicularAB = lineAB.PerpendicularLineAt(midPointAB);
+            LinearEquation perpendicularBC = lineBC.PerpendicularLineAt(midPointBC);
 
             Vector2 circumCircle = GetCrossingPoint(perpendicularAB, perpendicularBC);
             

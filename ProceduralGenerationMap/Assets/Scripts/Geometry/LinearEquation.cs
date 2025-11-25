@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Voronoi
+namespace Geometry
 {
     public struct LinearEquation
     {
@@ -17,7 +17,7 @@ namespace Voronoi
             C = A * pointA.x + B * pointA.y;
         }
 
-        public LinearEquation PerdicularLineAt(Vector2 point)
+        public LinearEquation PerpendicularLineAt(Vector2 point)
         {
             LinearEquation newLine = new LinearEquation();
 

@@ -1,11 +1,15 @@
 using System;
 using System.Collections.Generic;
+using Geometry;
 using UnityEngine;
 using Voronoi;
 
 namespace Utils
 {
-    // https://en.wikipedia.org/wiki/Smallest-circle_problem
+    /**
+     * Algorithm that determine the MEC (Minimum Enclosing Circle) around a group of point
+     * Useful link : https://en.wikipedia.org/wiki/Smallest-circle_problem
+     */
     public static class WelzAlgorithm
     {
         private static Circle Trivial(Vector2[] r, int nr)
@@ -32,7 +36,7 @@ namespace Utils
                     for (int j = i + 1; j < 3; j++)
                     {
                         Circle c = MathUtils.TwoPointMinimumEnclosingCircle(r[i], r[j]);
-                        if (IsValidCircle(c, r))
+                        if (c.Contains(r))
                         {
                             return c;
                         }
@@ -42,20 +46,7 @@ namespace Utils
 
             return MathUtils.ThreePointMinimumEnclosingCircle(r[0], r[1], r[2]);
         }
-
-        private static bool IsValidCircle(Circle c, Vector2[] p)
-        {
-            bool isValid = true;
-            int i = 0;
-            while (isValid && i < p.Length)
-            {
-                isValid = c.Contains(p[i]);
-                i++;
-            }
-
-            return isValid;
-        }
-
+        
         private static Circle Welzl(Vector2[] P, Vector2[] R, int n, int nr)
         {
             if (n == 0 || nr == 3)

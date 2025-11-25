@@ -1,17 +1,16 @@
-using System.Numerics;
+using UnityEngine;
 
-namespace Voronoi
+namespace Geometry
 {
     public struct Edge
     {
-        private Vector2 v0, v1;
+        public Vector2 v0, v1;
 
         public Edge(Vector2 v0, Vector2 v1)
         {
             this.v0 = v0;
             this.v1 = v1;
         }
-
         public override bool Equals(object obj)
         {
             if (obj is not Edge edge)

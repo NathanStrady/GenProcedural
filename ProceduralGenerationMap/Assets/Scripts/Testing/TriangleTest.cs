@@ -1,4 +1,6 @@
+using Geometry;
 using UnityEngine;
+using Utils;
 using Voronoi;
 
 namespace Testing
@@ -59,17 +61,8 @@ namespace Testing
             
             Gizmos.color = Color.green;
             int steps = 80;
-            for (int i = 0; i < steps; i++)
-            {
-                float a1 = (i / (float)steps) * Mathf.PI * 2f;
-                float a2 = ((i + 1) / (float)steps) * Mathf.PI * 2f;
-
-                Vector3 pA = c + new Vector3(Mathf.Cos(a1) * radius, Mathf.Sin(a1) * radius, 0);
-                Vector3 pB = c + new Vector3(Mathf.Cos(a2) * radius, Mathf.Sin(a2) * radius, 0);
-
-                Gizmos.DrawLine(pA, pB);
-            }
             
+            UtilsClass.DrawCircle(circle.Center, circle.Radius, steps);
             Vector3 d = new Vector3(D.x, D.y, 0);
 
             bool inside = tri.CircumCircle.Contains(D);

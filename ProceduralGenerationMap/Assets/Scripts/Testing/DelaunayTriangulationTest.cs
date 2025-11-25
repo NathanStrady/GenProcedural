@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using Geometry;
 using UnityEngine;
 using Utils;
@@ -5,17 +7,18 @@ using Voronoi;
 
 namespace Testing
 {
-    public class WelzTest : MonoBehaviour
+    public class DelaunayTriangulationTest : MonoBehaviour
     {
+        private List<Triangle> triangles;
         private Vector2[] points;
         private Circle smallestCircle;
         private Triangle superTriangle;
-        
-        void Start()
+        private void Start()
         {
             points = VoronoiGenerator.Instance.GenerateRandomPoints(); 
             smallestCircle = WelzAlgorithm.WelzlInitialization(points);
             superTriangle = VoronoiGenerator.Instance.MakeSuperTriangle(smallestCircle);
+            triangles = DelaunayTriangulation.BowyerWatson(points, superTriangle);
         }
         
         private void OnDrawGizmos()
@@ -36,8 +39,17 @@ namespace Testing
             Gizmos.DrawLine(superTriangle.v0, superTriangle.v1);
             Gizmos.DrawLine(superTriangle.v0, superTriangle.v2);
             Gizmos.DrawLine(superTriangle.v1, superTriangle.v2);
+            
+            Gizmos.color = Color.cyan;
+            if (triangles != null)
+            {
+                foreach (Triangle t in triangles)
+                {
+                    Gizmos.DrawLine(t.v0, t.v1);
+                    Gizmos.DrawLine(t.v1, t.v2);
+                    Gizmos.DrawLine(t.v2, t.v0);
+                }
+            }
         }
-        
-        
     }
 }
