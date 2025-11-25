@@ -1,50 +1,88 @@
 using UnityEngine;
+using Random = UnityEngine.Random;
 
-public static class UtilsClass
+namespace Utils
 {
-    #region WorldText
-    // Create Text in the world
-    public static TextMesh CreateWorldText(string text, Transform parent = null,
-        Vector3 localPosition = default(Vector3), int fontSize = 40, Color? color = null, TextAnchor anchor = TextAnchor.MiddleCenter, 
-        TextAlignment alignment = TextAlignment.Center, int sortingOrder = 0)
+    public static class UtilsClass
     {
-        if (color == null) color = Color.white;
-        return CreateWorldText_Internal(parent, text, localPosition, fontSize, (Color)color, anchor, alignment, sortingOrder);
-    }
+        #region WorldText
+        // Create Text in the world
+        public static TextMesh CreateWorldText(string text, Transform parent = null,
+            Vector3 localPosition = default(Vector3), int fontSize = 40, Color? color = null, TextAnchor anchor = TextAnchor.MiddleCenter, 
+            TextAlignment alignment = TextAlignment.Center, int sortingOrder = 0)
+        {
+            if (color == null) color = Color.white;
+            return CreateWorldText_Internal(parent, text, localPosition, fontSize, (Color)color, anchor, alignment, sortingOrder);
+        }
 
-    // Create Text in the world
-    private static TextMesh CreateWorldText_Internal(Transform parent, string text, Vector3 localPosition, int fontSize,
-        Color color, TextAnchor anchor, TextAlignment alignment, int sortingOrder)
-    {
-        GameObject gameObject = new GameObject("World_Text", typeof(TextMesh));
-        Transform transform = gameObject.transform;
-        transform.SetParent(parent, false);
-        transform.localPosition = localPosition;
-        TextMesh textMesh = gameObject.GetComponent<TextMesh>();
-        textMesh.text = text;
-        textMesh.anchor = anchor;
-        textMesh.alignment = alignment;
-        textMesh.fontSize = fontSize;
-        textMesh.color = color;
-        textMesh.GetComponent<Renderer>().sortingOrder = sortingOrder;
-        return textMesh;
-    }
+        // Create Text in the world
+        private static TextMesh CreateWorldText_Internal(Transform parent, string text, Vector3 localPosition, int fontSize,
+            Color color, TextAnchor anchor, TextAlignment alignment, int sortingOrder)
+        {
+            GameObject gameObject = new GameObject("World_Text", typeof(TextMesh));
+            Transform transform = gameObject.transform;
+            transform.SetParent(parent, false);
+            transform.localPosition = localPosition;
+            TextMesh textMesh = gameObject.GetComponent<TextMesh>();
+            textMesh.text = text;
+            textMesh.anchor = anchor;
+            textMesh.alignment = alignment;
+            textMesh.fontSize = fontSize;
+            textMesh.color = color;
+            textMesh.GetComponent<Renderer>().sortingOrder = sortingOrder;
+            return textMesh;
+        }
     
-    #endregion
+        #endregion
     
-    #region Mouse Position
+        #region Gizmos 
+        
+        public static void DrawCircle(Vector2 center, float radius, int segments)
+        {
+            Vector3 prevPoint = Vector3.zero;
+            Vector3 firstPoint = center + new Vector2(radius, 0);
 
-    public static Vector3 GetMouseWorldPosition(Vector2 screenPos)
-    {
-        Vector3 vec = GetMouseWorldPositionWithZ(screenPos, Camera.main);
-        vec.z = 0;
-        return vec;
-    }
+            prevPoint = firstPoint;
+            for (int i = 1; i <= segments; i++)
+            {
+                float angle = (float)i / segments * Mathf.PI * 2f;
+                Vector3 newPoint = center + new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * radius;
+                Gizmos.DrawLine(prevPoint, newPoint);
+                prevPoint = newPoint;
+            }
+
+            Gizmos.DrawLine(prevPoint, firstPoint);
+        }
+        
+        #endregion
+        
+        #region Mouse Position
+
+        public static Vector3 GetMouseWorldPosition(Vector2 screenPos)
+        {
+            Vector3 vec = GetMouseWorldPositionWithZ(screenPos, Camera.main);
+            vec.z = 0;
+            return vec;
+        }
     
-    public static Vector3 GetMouseWorldPositionWithZ(Vector3 screenPosition, Camera worldCamera)
-    {
-        Vector3 worldPosition = worldCamera.ScreenToWorldPoint(screenPosition);
-        return worldPosition;
+        public static Vector3 GetMouseWorldPositionWithZ(Vector3 screenPosition, Camera worldCamera)
+        {
+            Vector3 worldPosition = worldCamera.ScreenToWorldPoint(screenPosition);
+            return worldPosition;
+        }
+        #endregion 
+    
+        #region Array Operations
+
+        public static void Shuffle<T>(T[] array)
+        {
+            for (int i = 0; i < array.Length; i++)
+            {              
+                int r = Random.Range(i, array.Length);
+                (array[i], array[r]) = (array[r], array[i]);
+            }
+        }
+    
+        #endregion
     }
-    #endregion 
 }
