@@ -38,6 +38,7 @@ namespace Geometry
             return edges;
         }
         
+        
         public void DrawGizmos(Color color)
         {
             if (VertexCount < 2)

@@ -20,8 +20,6 @@ namespace Voronoi
                 new Vector2(10, 10), 
                 new Vector2(-10, 10)   
             });
-            
-
         }
 
         private void BuildDiagram(List<Triangle> delaunayTriangles, Vector2[] sites)

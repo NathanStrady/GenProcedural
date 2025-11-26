@@ -11,8 +11,6 @@ namespace Voronoi
     {
         public static VoronoiGenerator Instance { get; private set; }
         
-        
-        
         [Header("Voronoï Parameters")]
         [SerializeField] private int maxNumberOfPoints = 1000;
         [SerializeField] private Vector2 areaMin = new Vector2(-10, -10);
