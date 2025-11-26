@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Geometry
 {
+    [System.Serializable]
     public struct Circle
     {
         public Vector2 Center;

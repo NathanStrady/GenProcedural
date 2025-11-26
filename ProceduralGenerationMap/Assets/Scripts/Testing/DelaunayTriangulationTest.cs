@@ -17,7 +17,7 @@ namespace Testing
         {
             points = VoronoiGenerator.Instance.GenerateRandomPoints(); 
             smallestCircle = WelzAlgorithm.WelzlInitialization(points);
-            superTriangle = VoronoiGenerator.Instance.MakeSuperTriangle(smallestCircle);
+            superTriangle = WelzAlgorithm.MakeSuperTriangle(smallestCircle);
             triangles = DelaunayTriangulation.BowyerWatson(points, superTriangle);
         }
         

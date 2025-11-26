@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace Geometry
 {
+    [System.Serializable]
     public struct Edge
     {
         public Vector2 v0, v1;

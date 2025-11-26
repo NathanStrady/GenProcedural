@@ -39,7 +39,7 @@ namespace Utils
         
         public static void DrawCircle(Vector2 center, float radius, int segments)
         {
-            Vector3 prevPoint = Vector3.zero;
+            Vector3 prevPoint;
             Vector3 firstPoint = center + new Vector2(radius, 0);
 
             prevPoint = firstPoint;

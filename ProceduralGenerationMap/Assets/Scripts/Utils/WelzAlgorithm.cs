@@ -74,5 +74,17 @@ namespace Utils
             Vector2[] R = new Vector2[3];
             return Welzl(points, R, points.Length, 0);
         }
+        
+        public static Triangle MakeSuperTriangle(Circle mec)
+        {
+            Vector2 center = mec.Center;
+            float radius = mec.Radius * 2;
+            
+            Vector2 v1 = center + new Vector2(0, radius);
+            Vector2 v2 = center + new Vector2(-radius * Mathf.Sin(Mathf.PI / 3f), -radius * Mathf.Cos(Mathf.PI / 3f));
+            Vector2 v3 = center + new Vector2(radius * Mathf.Sin(Mathf.PI / 3f), -radius * Mathf.Cos(Mathf.PI / 3f));
+            
+            return new Triangle(v1, v2, v3);
+        }
     }
 }

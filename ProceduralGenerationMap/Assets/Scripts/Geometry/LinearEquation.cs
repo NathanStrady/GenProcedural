@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace Geometry
 {
+    [System.Serializable]
     public struct LinearEquation
     {
         public float A;
@@ -26,6 +27,16 @@ namespace Geometry
             newLine.C = newLine.A * point.x + newLine.B * point.y;
 
             return newLine;
+        }
+        
+        public float Evaluate(Vector2 p)
+        {
+            return A * p.x + B * p.y - C;
+        }
+
+        public bool IsInside(Vector2 p)
+        {
+            return Evaluate(p) >= 0;
         }
 
 

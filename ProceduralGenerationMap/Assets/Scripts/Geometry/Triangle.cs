@@ -23,16 +23,66 @@ namespace Geometry
             e2 = new Edge(v1, v2);
         }
         
-        public bool HasEdge(Edge e)
+        public bool HasSharedEdgeWith(Edge e)
         {
             Edge e0, e1, e2;
             GetEdges(out e0, out e1, out e2);
             return e.Equals(e0) || e.Equals(e1) || e.Equals(e2);
         }
 
+        public bool HasSharedEdgeWith(Edge e, List<Triangle> triangles)
+        {
+            foreach (Triangle triangle in triangles)
+            {
+                if (triangle.Equals(this))
+                    continue;
+                
+                if (triangle.HasSharedEdgeWith(e))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public List<Triangle> GetAdjacentTriangles(List<Triangle> triangles)
+        {
+            List<Triangle> adjacentTriangles = new List<Triangle>();
+            GetEdges(out Edge e0, out Edge e1, out Edge e2);
+            Edge[] edges = { e0, e1, e2 };
+
+            foreach (Triangle triangle in triangles)
+            {
+                if (triangle.Equals(this))
+                    continue;
+
+                foreach (Edge edge in edges)
+                {
+                    if (triangle.HasSharedEdgeWith(edge))
+                    {
+                        adjacentTriangles.Add(triangle);
+                        break;
+                    }
+                }
+            }
+            
+            return adjacentTriangles;
+        }
+        
         public bool HasVertex(Vector2 p)
         {
             return p.Equals(v0) || p.Equals(v1) || p.Equals(v2);
+        }
+        
+        public override bool Equals(object obj)
+        {
+            if (!(obj is Triangle other))
+                return false;
+
+            return v0.Equals(other.v0) &&
+                   v1.Equals(other.v1) &&
+                   v2.Equals(other.v2);
         }
 
         public Circle CircumCircle => MathUtils.ThreePointMinimumEnclosingCircle(v0, v1, v2);

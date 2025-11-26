@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Geometry;
 using UnityEngine;
+using Utils;
 using Random = UnityEngine.Random;
 
 namespace Voronoi
@@ -10,10 +11,19 @@ namespace Voronoi
     {
         public static VoronoiGenerator Instance { get; private set; }
         
+        
+        
         [Header("Voronoï Parameters")]
         [SerializeField] private int maxNumberOfPoints = 1000;
         [SerializeField] private Vector2 areaMin = new Vector2(-10, -10);
         [SerializeField] private Vector2 areaMax = new Vector2(10, 10);
+        
+        public VoronoiDiagram diagram { get; private set; }
+        public List<Triangle> triangles { get; private set; }
+        public Triangle superTriangle { get; private set; }
+        public Circle smallestCircle { get; private set; }
+        
+        
 
         private void Awake()
         {
@@ -25,6 +35,11 @@ namespace Voronoi
 
             Instance = this;
             DontDestroyOnLoad(gameObject);
+        }
+
+        private void Start()
+        {
+            BuildVoronoi();
         }
 
         public Vector2[] GenerateRandomPoints()
@@ -41,16 +56,13 @@ namespace Voronoi
             return points;
         }
         
-        public Triangle MakeSuperTriangle(Circle mec)
+        public void BuildVoronoi()
         {
-            Vector2 center = mec.Center;
-            float radius = mec.Radius * 2;
-            
-            Vector2 v1 = center + new Vector2(0, radius);
-            Vector2 v2 = center + new Vector2(-radius * Mathf.Sin(Mathf.PI / 3f), -radius * Mathf.Cos(Mathf.PI / 3f));
-            Vector2 v3 = center + new Vector2(radius * Mathf.Sin(Mathf.PI / 3f), -radius * Mathf.Cos(Mathf.PI / 3f));
-            
-            return new Triangle(v1, v2, v3);
+            Vector2[] points = GenerateRandomPoints();
+            smallestCircle = WelzAlgorithm.WelzlInitialization(points);
+            superTriangle = WelzAlgorithm.MakeSuperTriangle(smallestCircle);
+            triangles = DelaunayTriangulation.BowyerWatson(points, superTriangle);
+            diagram = new VoronoiDiagram(triangles, points);
         }
     }
 }
