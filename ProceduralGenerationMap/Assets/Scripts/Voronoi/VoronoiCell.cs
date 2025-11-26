@@ -6,13 +6,19 @@ namespace Voronoi
 {
     public class VoronoiCell
     {
-        public Vector2 site;             
-        public List<Vector2> vertices;
-
-        public VoronoiCell(Vector2 site)
+        public Vector2 Site;
+        public Polygon Polygon;
+        
+        public VoronoiCell(Vector2 site, Polygon polygon)
         {
-            this.site = site;
-            vertices = new();
+            Site = site;
+            Polygon = polygon;
+        }
+
+        public void DrawVoronoiCell(Color color)
+        {
+            Gizmos.DrawSphere(Site, 0.05f);
+            Polygon.DrawGizmos(color);
         }
     }
 }

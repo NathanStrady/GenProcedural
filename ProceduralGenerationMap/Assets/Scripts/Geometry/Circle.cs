@@ -33,5 +33,22 @@ namespace Geometry
 
             return isValid;
         }
+        
+        public void DrawGizmos(Color color, int segments = 64)
+        {
+            Gizmos.color = color;
+
+            float angleStep = 360f / segments;
+            Vector3 prevPoint = Center + new Vector2(Radius, 0);
+
+            for (int i = 1; i <= segments; i++)
+            {
+                float angle = angleStep * i * Mathf.Deg2Rad;
+                Vector3 nextPoint = Center + new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * Radius;
+
+                Gizmos.DrawLine(prevPoint, nextPoint);
+                prevPoint = nextPoint;
+            }
+        }
     }
 }

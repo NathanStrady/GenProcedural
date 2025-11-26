@@ -148,16 +148,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f0f0b3adf084d378755dbd4915f454c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Voronoi.VoronoiRender
-  delaunayTriangleColor: {r: 0, g: 1, b: 1, a: 1}
-  renderDelaunayTriangle: 0
-  siteColor: {r: 1, g: 0, b: 0, a: 1}
-  renderSiteColor: 1
-  cellColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  delaunayTriangleColor: {r: 1, g: 0, b: 0, a: 1}
+  renderDelaunayTriangle: 1
+  cellColor: {r: 1, g: 1, b: 1, a: 1}
   renderCell: 1
   superTriangleColor: {r: 0, g: 1, b: 0, a: 1}
-  renderSupertriangle: 1
+  renderSupertriangle: 0
   smallestCircleColor: {r: 0, g: 0, b: 1, a: 1}
-  renderSmallestCircle: 1
+  renderSmallestCircle: 0
+  circumCircleColor: {r: 0, g: 0, b: 0, a: 1}
+  renderCircle: 1
 --- !u!4 &53014713
 Transform:
   m_ObjectHideFlags: 0
@@ -202,7 +202,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f16e554d8e6d74893a913af913de5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Voronoi.VoronoiGenerator
-  maxNumberOfPoints: 10
+  maxNumberOfPoints: 25
   areaMin: {x: -10, y: -10}
   areaMax: {x: 10, y: 10}
 --- !u!4 &234735383

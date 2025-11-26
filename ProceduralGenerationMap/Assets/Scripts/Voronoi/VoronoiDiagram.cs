@@ -8,32 +8,36 @@ namespace Voronoi
     public class VoronoiDiagram
     {
         public List<VoronoiCell> cells = new();
-        public Rect bounds;
+        private Polygon _bounds;
 
         public VoronoiDiagram(List<Triangle> delaunayTriangles, Vector2[] sites)
         {
-            BuildDiagram(delaunayTriangles, sites);    
+            BuildDiagram(delaunayTriangles, sites);
+            _bounds = new Polygon(new List<Vector2>
+            {
+                new Vector2(-10, -10),
+                new Vector2(10, -10),  
+                new Vector2(10, 10), 
+                new Vector2(-10, 10)   
+            });
+            
+
         }
 
         private void BuildDiagram(List<Triangle> delaunayTriangles, Vector2[] sites)
         {
             foreach (Vector2 p in sites)
             {
-                VoronoiCell cell = new VoronoiCell(p);
-                List<Triangle> adjacentTriangle = new();
+                List<Triangle> adjacentTriangles = new();
                 foreach (Triangle tri in delaunayTriangles)
                 {
                     if (tri.HasVertex(p))
-                    {
-                        adjacentTriangle.Add(tri);
-                    }
+                        adjacentTriangles.Add(tri);
                 }
-                
+
                 List<Vector2> circumCenters = new();
-                foreach (Triangle tri in adjacentTriangle)
-                {
+                foreach (Triangle tri in adjacentTriangles)
                     circumCenters.Add(tri.CircumCircle.Center);
-                }
                 
                 circumCenters.Sort((a, b) =>
                 {
@@ -42,7 +46,8 @@ namespace Voronoi
                     return angleA.CompareTo(angleB);
                 });
                 
-                cell.vertices.AddRange(circumCenters);
+                Polygon polygon = new Polygon(circumCenters);
+                VoronoiCell cell = new VoronoiCell(p, polygon);
                 cells.Add(cell);
             }
         }

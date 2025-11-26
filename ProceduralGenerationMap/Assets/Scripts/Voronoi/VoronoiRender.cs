@@ -12,14 +12,14 @@ namespace Voronoi
         [Header("Voronoi Rendering")]
         public Color delaunayTriangleColor = Color.cyan;
         public bool renderDelaunayTriangle = true;
-        public Color siteColor = Color.red;
-        public bool renderSiteColor = true;
         public Color cellColor = Color.yellow;
         public bool renderCell = true;
         public Color superTriangleColor = Color.green;
         public bool renderSupertriangle = true;
         public Color smallestCircleColor = Color.blue;
         public bool renderSmallestCircle = true;
+        public Color circumCircleColor = Color.darkBlue;
+        public bool renderCircle = true;
         
         private VoronoiGenerator _generator;
 
@@ -50,49 +50,38 @@ namespace Voronoi
 
             if (renderSupertriangle)
             {
-                Gizmos.color = superTriangleColor;
-                Gizmos.DrawLine(_generator.superTriangle.v0, _generator.superTriangle.v1);
-                Gizmos.DrawLine(_generator.superTriangle.v0, _generator.superTriangle.v2);
-                Gizmos.DrawLine(_generator.superTriangle.v1, _generator.superTriangle.v2);
+                _generator.superTriangle.DrawGizmos(superTriangleColor);
             }
 
             if (renderSmallestCircle)
             {
-                Gizmos.color = smallestCircleColor;
-                UtilsClass.DrawCircle(_generator.smallestCircle.Center, _generator.smallestCircle.Radius, 64);
+                _generator.smallestCircle.DrawGizmos(smallestCircleColor);
             }
 
             if (renderDelaunayTriangle)
             {
-                Gizmos.color = delaunayTriangleColor;
                 if (_generator.triangles != null)
                 {
                     foreach (Triangle t in _generator.triangles)
                     {
-                        Gizmos.DrawLine(t.v0, t.v1);
-                        Gizmos.DrawLine(t.v1, t.v2);
-                        Gizmos.DrawLine(t.v2, t.v0);
+                        t.DrawGizmos(delaunayTriangleColor);
                     }
+                }
+            }
+            
+            if (renderCircle)
+            {
+                foreach (Triangle t in _generator.triangles)
+                {
+                    t.CircumCircle.DrawGizmos(circumCircleColor);
                 }
             }
 
             if (renderCell)
             {
-                Gizmos.color = siteColor;
                 foreach (VoronoiCell cell in _generator.diagram.cells)
                 {
-
-                    Gizmos.DrawSphere(new Vector3(cell.site.x, cell.site.y, 0f), 0.05f);
-                    Gizmos.color = cellColor;
-                    if (cell.vertices == null || cell.vertices.Count == 0)
-                        continue;
-                    
-                    for (int i = 0; i < cell.vertices.Count; i++)
-                    {
-                        Vector2 a = cell.vertices[i];
-                        Vector2 b = cell.vertices[(i + 1) % cell.vertices.Count];   
-                        Gizmos.DrawLine(a, b);
-                    }
+                    cell.DrawVoronoiCell(cellColor);
                 }
             }
 

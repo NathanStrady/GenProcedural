@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Utils;
@@ -6,7 +7,7 @@ using Voronoi;
 namespace Geometry
 {
     [System.Serializable]
-    public struct Triangle
+    public struct Triangle : IEquatable<Triangle>
     {
         public Vector2 v0, v1, v2;
         public Triangle(Vector2 v0, Vector2 v1, Vector2 v2)
@@ -86,5 +87,24 @@ namespace Geometry
         }
 
         public Circle CircumCircle => MathUtils.ThreePointMinimumEnclosingCircle(v0, v1, v2);
+        
+        public void DrawGizmos(Color color)
+        {
+            Gizmos.color = color;
+            Gizmos.DrawSphere(new Vector3(CircumCircle.Center.x, CircumCircle.Center.y, 0f), 0.05f);
+            Gizmos.DrawLine(v0, v1);
+            Gizmos.DrawLine(v1, v2);
+            Gizmos.DrawLine(v2, v0);
+        }
+
+        public bool Equals(Triangle other)
+        {
+            return v0.Equals(other.v0) && v1.Equals(other.v1) && v2.Equals(other.v2);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(v0, v1, v2);
+        }
     }
 }

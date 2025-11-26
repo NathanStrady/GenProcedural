@@ -23,8 +23,6 @@ namespace Voronoi
         public Triangle superTriangle { get; private set; }
         public Circle smallestCircle { get; private set; }
         
-        
-
         private void Awake()
         {
             if (Instance != null && Instance != this)

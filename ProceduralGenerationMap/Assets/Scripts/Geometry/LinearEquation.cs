@@ -29,16 +29,21 @@ namespace Geometry
             return newLine;
         }
         
-        public float Evaluate(Vector2 p)
+        public bool TryIntersection(LinearEquation other, out Vector2 intersection)
         {
-            return A * p.x + B * p.y - C;
+            float det = A * other.B - other.A * B;
+
+            if (Mathf.Approximately(det, 0f))
+            {
+                intersection = Vector2.zero;
+                return false;
+            }
+
+            float x = (other.B * C - B * other.C) / det;
+            float y = (A * other.C - other.A * C) / det;
+
+            intersection = new Vector2(x, y);
+            return true;
         }
-
-        public bool IsInside(Vector2 p)
-        {
-            return Evaluate(p) >= 0;
-        }
-
-
     }
 }
