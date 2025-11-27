@@ -5,6 +5,7 @@ using UnityEngine;
 namespace Geometry
 {
     [System.Serializable]
+    // Basic Circle structure that contains basic functions (Contains, DrawGizmos)
     public struct Circle
     {
         public Vector2 Center;

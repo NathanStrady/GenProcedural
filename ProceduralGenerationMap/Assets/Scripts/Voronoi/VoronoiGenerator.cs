@@ -57,9 +57,17 @@ namespace Voronoi
         public void BuildVoronoi()
         {
             Vector2[] points = GenerateRandomPoints();
-            smallestCircle = WelzAlgorithm.WelzlInitialization(points);
+            
+            // Find the MEC (Minimul Enclosing Circle)
+            smallestCircle = WelzAlgorithm.WelzlInitialization(points); 
+            
+            // Make a super triangle with the MEC
             SuperDelaunayTriangle = WelzAlgorithm.MakeSuperTriangle(smallestCircle);
+            
+            // Build the delaunay graph following the bowser-watson algorithm
             DelaunayGraph = new DelaunayGraph(points, SuperDelaunayTriangle);
+            
+            // Build the voronoi diagram
             diagram = new VoronoiDiagram(DelaunayGraph, points);
         }
     }

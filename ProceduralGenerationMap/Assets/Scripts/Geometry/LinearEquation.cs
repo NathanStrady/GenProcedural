@@ -3,6 +3,8 @@ using UnityEngine;
 namespace Geometry
 {
     [System.Serializable]
+    // Basinc Linear Equation class that can compute perpendicular line and test intersection between them (Ax + Bx = C)
+    // Ressource of this class : 
     public struct LinearEquation
     {
         public float A;

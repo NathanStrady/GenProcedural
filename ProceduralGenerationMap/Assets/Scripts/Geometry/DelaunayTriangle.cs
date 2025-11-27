@@ -8,6 +8,7 @@ using Voronoi;
 namespace Geometry
 {
     [Serializable]
+    // Delaunay structure that contains each vertex of the triangle and also each neighbor of the triangle.
     public class DelaunayTriangle
     {
         public int index; 

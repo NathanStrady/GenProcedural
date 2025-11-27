@@ -95,6 +95,7 @@ namespace Delaunay
             return triangulation;
         }
 
+        // Link Neighbors of a delauney triangulation.
         private void LinkNeighbors(List<DelaunayTriangle> triangles)
         {
             for (int i = 0; i < triangles.Count; i++)
@@ -114,6 +115,8 @@ namespace Delaunay
             }
         }
 
+        // Build adjacency list by looping through each triangle of the triangulation. 
+        // With this, we can find the neighbour of a triangle pretty easily with that.
         private void BuildAdjacencyList(List<DelaunayTriangle> triangles)
         {
             triangleByID = new Dictionary<int, DelaunayTriangle>();

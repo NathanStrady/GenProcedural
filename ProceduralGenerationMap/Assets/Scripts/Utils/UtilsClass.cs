@@ -3,6 +3,7 @@ using Random = UnityEngine.Random;
 
 namespace Utils
 {
+    // Basic utils class from a personnal project
     public static class UtilsClass
     {
         #region WorldText

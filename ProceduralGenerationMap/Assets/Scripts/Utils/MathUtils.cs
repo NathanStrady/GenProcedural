@@ -5,6 +5,7 @@ using Voronoi;
 
 namespace Utils
 {
+    // Math function that are useful for the project such as finding a circile with two or three point
     public static class MathUtils 
     {
         #region MEC (Minium Enclonsing Circle)

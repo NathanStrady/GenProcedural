@@ -4,6 +4,7 @@ using UnityEngine;
 namespace Geometry
 {
     [System.Serializable]
+    // Edge structure that compute an edge of a polygon
     public struct Edge : IEquatable<Edge>
     {
         public Vector2 v0, v1;
