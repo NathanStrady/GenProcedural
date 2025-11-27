@@ -13,21 +13,24 @@ namespace Delaunay
         {
             List<DelaunayTriangle> triangles = BowyerWatson(points, superDelaunayTriangle);
             BuildAdjacencyList(triangles);
-            
         }
 
+        // https://en.wikipedia.org/wiki/Bowyer%E2%80%93Watson_algorithm//
         private List<DelaunayTriangle> BowyerWatson(Vector2[] points, DelaunayTriangle superDelaunayTriangle)
         {
             int ID = 0;
             superDelaunayTriangle.index = ID++;
+            
             List<DelaunayTriangle> triangulation = new List<DelaunayTriangle>();
             triangulation.Add(superDelaunayTriangle);
             
             foreach (Vector2 point in points)
             {
                 List<DelaunayTriangle> badTriangle = new List<DelaunayTriangle>();
+                // We determine each triangle are "bad" ones.
                 foreach (DelaunayTriangle triangle in triangulation)
                 {
+                    // If the current point is inside the circumcircle of the triangle, it is a bad one
                     if (triangle.CircumCircle.Contains(point))
                     {
                         badTriangle.Add(triangle);
@@ -35,6 +38,7 @@ namespace Delaunay
                 }
 
                 List<Edge> polygon = new List<Edge>();
+                // We loop in each bad triangle in order to get their share edges with the current one. 
                 for (int i = 0; i < badTriangle.Count; i++)
                 {
                     DelaunayTriangle curr = badTriangle[i];
@@ -60,11 +64,13 @@ namespace Delaunay
                     if (!shared2) polygon.Add(e2);
                 }
 
+                // We loop into each bad triangle to delete them of the final triangulation
                 foreach (DelaunayTriangle triangle in badTriangle)
                 {
                     triangulation.Remove(triangle);
                 }
 
+                // We construct new triangle with the edge of bad ones and the current point that serve to detect if the triangle that we loop in is the bad one.
                 foreach (Edge edge in polygon)
                 {
                     DelaunayTriangle newTri = new DelaunayTriangle(edge.v0, edge.v1, point);
@@ -72,12 +78,13 @@ namespace Delaunay
                 }
             }
 
-            
+            // We delete the all triangle that have a common vertex with the super one for clean up
             triangulation.RemoveAll(triangle =>
                 triangle.HasVertex(superDelaunayTriangle.v0) ||
                 triangle.HasVertex(superDelaunayTriangle.v1) ||
                 triangle.HasVertex(superDelaunayTriangle.v2));
 
+            // Assign an ID to the rest of the triangle
             foreach (var triangle in triangulation)
             {
                 triangle.index = ID;
@@ -128,15 +135,6 @@ namespace Delaunay
                         adjacencyList[currTriangle.index].Add(neighbor.index);
                     }
                 }
-            }
-        }
-
-        public void DebugTriangleList()
-        {
-            foreach (var triangle in triangleByID)
-            {
-                Debug.Log(triangle.Key);
-                Debug.Log(triangle.Value.CircumCircle.Center);
             }
         }
 
