@@ -34,27 +34,6 @@ namespace Utils
         }
     
         #endregion
-    
-        #region Gizmos 
-        
-        public static void DrawCircle(Vector2 center, float radius, int segments)
-        {
-            Vector3 prevPoint;
-            Vector3 firstPoint = center + new Vector2(radius, 0);
-
-            prevPoint = firstPoint;
-            for (int i = 1; i <= segments; i++)
-            {
-                float angle = (float)i / segments * Mathf.PI * 2f;
-                Vector3 newPoint = center + new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * radius;
-                Gizmos.DrawLine(prevPoint, newPoint);
-                prevPoint = newPoint;
-            }
-
-            Gizmos.DrawLine(prevPoint, firstPoint);
-        }
-        
-        #endregion
         
         #region Mouse Position
 

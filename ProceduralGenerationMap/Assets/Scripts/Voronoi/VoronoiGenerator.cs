@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Delaunay;
 using Geometry;
 using UnityEngine;
 using Utils;
@@ -15,10 +16,11 @@ namespace Voronoi
         [SerializeField] private int maxNumberOfPoints = 1000;
         [SerializeField] private Vector2 areaMin = new Vector2(-10, -10);
         [SerializeField] private Vector2 areaMax = new Vector2(10, 10);
-        
+
+        public DelaunayGraph DelaunayGraph;
         public VoronoiDiagram diagram { get; private set; }
-        public List<Triangle> triangles { get; private set; }
-        public Triangle superTriangle { get; private set; }
+        public List<DelaunayTriangle> triangles { get; private set; }
+        public DelaunayTriangle SuperDelaunayTriangle { get; private set; }
         public Circle smallestCircle { get; private set; }
         
         private void Awake()
@@ -56,9 +58,9 @@ namespace Voronoi
         {
             Vector2[] points = GenerateRandomPoints();
             smallestCircle = WelzAlgorithm.WelzlInitialization(points);
-            superTriangle = WelzAlgorithm.MakeSuperTriangle(smallestCircle);
-            triangles = DelaunayTriangulation.BowyerWatson(points, superTriangle);
-            diagram = new VoronoiDiagram(triangles, points);
+            SuperDelaunayTriangle = WelzAlgorithm.MakeSuperTriangle(smallestCircle);
+            DelaunayGraph = new DelaunayGraph(points, SuperDelaunayTriangle);
+            diagram = new VoronoiDiagram(DelaunayGraph, points);
         }
     }
 }

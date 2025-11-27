@@ -49,7 +49,7 @@ namespace Geometry
             for (int i = 0; i < VertexCount; i++)
             {
                 Vector2 a = Vertices[i];
-                Vector2 b = Vertices[(i + 1) % VertexCount]; // wrap
+                Vector2 b = Vertices[(i + 1) % VertexCount]; 
                 Gizmos.DrawLine(a, b);
             }
         }

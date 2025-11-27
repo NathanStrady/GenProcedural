@@ -44,13 +44,11 @@ namespace Voronoi
         {
             if (_generator == null) 
                 return;
-            
-            if (_generator.diagram == null || _generator.diagram.cells == null)
-                return;
+
 
             if (renderSupertriangle)
             {
-                _generator.superTriangle.DrawGizmos(superTriangleColor);
+                _generator.SuperDelaunayTriangle.DrawGizmos(superTriangleColor);
             }
 
             if (renderSmallestCircle)
@@ -60,30 +58,24 @@ namespace Voronoi
 
             if (renderDelaunayTriangle)
             {
-                if (_generator.triangles != null)
-                {
-                    foreach (Triangle t in _generator.triangles)
-                    {
-                        t.DrawGizmos(delaunayTriangleColor);
-                    }
-                }
+                _generator.DelaunayGraph.DrawGizmo(delaunayTriangleColor);
             }
             
-            if (renderCircle)
-            {
-                foreach (Triangle t in _generator.triangles)
-                {
-                    t.CircumCircle.DrawGizmos(circumCircleColor);
-                }
-            }
-
             if (renderCell)
             {
-                foreach (VoronoiCell cell in _generator.diagram.cells)
-                {
-                    cell.DrawVoronoiCell(cellColor);
-                }
+                _generator.diagram.DrawGizmo(cellColor);
             }
+
+            if (renderCircle)
+            {
+                foreach (var tri in _generator.DelaunayGraph.triangleByID)
+                {
+                    tri.Value.CircumCircle.DrawGizmos(circumCircleColor);
+                }
+
+            }
+
+            
 
         }
         
