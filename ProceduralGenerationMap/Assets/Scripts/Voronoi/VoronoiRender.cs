@@ -20,6 +20,8 @@ namespace Voronoi
         public bool renderSmallestCircle = true;
         public Color circumCircleColor = Color.darkBlue;
         public bool renderCircle = true;
+        public Color pointColor = Color.darkGoldenRod;
+        public bool renderPoint = true; 
         
         private VoronoiGenerator _generator;
 
@@ -44,6 +46,15 @@ namespace Voronoi
         {
             if (_generator == null) 
                 return;
+
+            if (renderPoint)
+            {
+                Gizmos.color = pointColor;
+                foreach (Vector2 p in _generator.points)
+                {
+                    Gizmos.DrawSphere(p, 0.05f);
+                }
+            }
 
 
             if (renderSupertriangle)

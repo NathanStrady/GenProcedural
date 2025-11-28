@@ -119,11 +119,8 @@ namespace Geometry
         {
             Gizmos.color = color;
             Gizmos.DrawLine(v0, v1);
-            Gizmos.DrawSphere(v0, 0.05f);
             Gizmos.DrawLine(v1, v2);
-            Gizmos.DrawSphere(v1, 0.05f);
             Gizmos.DrawLine(v2, v0);
-            Gizmos.DrawSphere(v2, 0.05f);
         }
         
         public void DrawNeighbor(Color neighborColor)

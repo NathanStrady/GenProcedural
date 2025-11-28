@@ -18,6 +18,8 @@ namespace Voronoi
         [SerializeField] private Vector2 areaMax = new Vector2(10, 10);
 
         public DelaunayGraph DelaunayGraph;
+
+        public Vector2[] points; 
         public VoronoiDiagram diagram { get; private set; }
         public List<DelaunayTriangle> triangles { get; private set; }
         public DelaunayTriangle SuperDelaunayTriangle { get; private set; }
@@ -56,7 +58,7 @@ namespace Voronoi
         
         public void BuildVoronoi()
         {
-            Vector2[] points = GenerateRandomPoints();
+            points = GenerateRandomPoints();
             
             // Find the MEC (Minimul Enclosing Circle)
             smallestCircle = WelzAlgorithm.WelzlInitialization(points); 

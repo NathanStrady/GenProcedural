@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Geometry
 {
-    public struct Region
+    public class Region
     {
         public Vector2 Site;
         public List<Vector2> Vertices;
@@ -44,12 +44,13 @@ namespace Geometry
             if (Vertices.Count < 2) return; 
 
             Gizmos.color = color;
-            Gizmos.DrawSphere(Site, 0.05f);
+            Gizmos.DrawSphere(Site, 0.1f);
             for (int i = 0; i < Vertices.Count; i++)
             {
                 Vector2 current = Vertices[i];
                 Vector2 next = Vertices[(i + 1) % Vertices.Count];
                 Gizmos.DrawLine(current, next);
+                Gizmos.DrawSphere(current, 0.1f);
             }
         }
     }
